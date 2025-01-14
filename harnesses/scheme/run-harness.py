@@ -7,7 +7,7 @@ import pathlib
 extensions = (".scm", ".sps", ".ss", ".sls", ".sld", ".sc", ".sch")  # file extensions to check
 glob_names = ("main", "*main*", "*")  # globs to check SEQUENTIALLY
 def runfile(path: pathlib.Path):
-    return subprocess.run(["scheme", "--load", "--batch-mode", str(path)]).returncode
+    return subprocess.run(["scheme", "--batch-mode", "--load", str(path)]).returncode
 
 working_dir = pathlib.Path(".")
 
