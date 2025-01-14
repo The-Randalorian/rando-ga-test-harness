@@ -65,7 +65,7 @@ jobs:
         id: build-and-push-clips
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         with:
-          context: .
+          context: ./harnesses/clips/
           file: ./harnesses/clips/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/the-randalorian/rando-ga-test-harness-clips:latest, ghcr.io/the-randalorian/rando-ga-test-harness:clips-latest
@@ -121,7 +121,7 @@ jobs:
         id: build-and-push-lisp
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         with:
-          context: .
+          context: ./harnesses/lisp/
           file: ./harnesses/lisp/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/the-randalorian/rando-ga-test-harness-lisp:latest, ghcr.io/the-randalorian/rando-ga-test-harness:lisp-latest
@@ -177,7 +177,7 @@ jobs:
         id: build-and-push-prolog
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         with:
-          context: .
+          context: ./harnesses/prolog/
           file: ./harnesses/prolog/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/the-randalorian/rando-ga-test-harness-prolog:latest, ghcr.io/the-randalorian/rando-ga-test-harness:prolog-latest
@@ -233,7 +233,7 @@ jobs:
         id: build-and-push-scheme
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         with:
-          context: .
+          context: ./harnesses/scheme/
           file: ./harnesses/scheme/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/the-randalorian/rando-ga-test-harness-scheme:latest, ghcr.io/the-randalorian/rando-ga-test-harness:scheme-latest
