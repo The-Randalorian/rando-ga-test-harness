@@ -75,7 +75,7 @@ jobs:
       - name: Sign the published clips Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
-          TAGS: ghcr.io/the-randalorian/rando-ga-test-harness-clips:latest, ghcr.io/the-randalorian/rando-ga-test-harness:clips-latest
+          TAGS: ghcr.io/the-randalorian/rando-ga-test-harness-clips:latest
           DIGEST: ${{ steps.build-and-push-clips.outputs.digest }}
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
 
@@ -131,7 +131,7 @@ jobs:
       - name: Sign the published clisp Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
-          TAGS: ghcr.io/the-randalorian/rando-ga-test-harness-clisp:latest, ghcr.io/the-randalorian/rando-ga-test-harness:clisp-latest
+          TAGS: ghcr.io/the-randalorian/rando-ga-test-harness-clisp:latest
           DIGEST: ${{ steps.build-and-push-clisp.outputs.digest }}
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
 
@@ -187,7 +187,7 @@ jobs:
       - name: Sign the published prolog Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
-          TAGS: ghcr.io/the-randalorian/rando-ga-test-harness-prolog:latest, ghcr.io/the-randalorian/rando-ga-test-harness:prolog-latest
+          TAGS: ghcr.io/the-randalorian/rando-ga-test-harness-prolog:latest
           DIGEST: ${{ steps.build-and-push-prolog.outputs.digest }}
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
 
@@ -243,6 +243,6 @@ jobs:
       - name: Sign the published scheme Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
-          TAGS: ghcr.io/the-randalorian/rando-ga-test-harness-scheme:latest, ghcr.io/the-randalorian/rando-ga-test-harness:scheme-latest
+          TAGS: ghcr.io/the-randalorian/rando-ga-test-harness-scheme:latest
           DIGEST: ${{ steps.build-and-push-scheme.outputs.digest }}
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
