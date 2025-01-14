@@ -7,7 +7,7 @@ import pathlib
 extensions = (".scm", ".sps", ".ss", ".sls", ".sld", ".sc", ".sch")  # file extensions to check
 glob_names = ("main", "*main*", "*")  # globs to check SEQUENTIALLY
 def runfile(path: pathlib.Path):
-    subprocess.run(["scheme", "--load", str(path)])
+    return subprocess.run(["scheme", "--load", "--batch-mode", str(path)]).returncode
 
 working_dir = pathlib.Path(".")
 
@@ -23,11 +23,13 @@ for glob_start in glob_names:
 
     # multiple executables is not allowed
     if len(executables) > 1:
-        print("Multiple executables found")
-        exit(1002)
+        print("HARNESS_ERROR: Multiple executables found")
+        exit(1002)  # multiple executables
     elif len(executables) == 1:
-        runfile(executables[0])
+        rc = runfile(executables[0])
+        if rc != 0:
+            exit(2000 + rc)  # error in user file, subtract 2000 to get the error code
         exit(0)
 
-print("No executables found")
-exit(1001)
+print("HARNESS_ERROR: No executables found")
+exit(1001)  # no executable
