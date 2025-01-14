@@ -17,14 +17,15 @@ on:
   #  branches: [ "master" ]
 
 env:
-  # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
 
+# this uses 24.04 (which at time of writing is in beta)
+# this is because ubuntu-latest will switch to 24.04 soon, and I don't want things breaking.
 
 jobs:
   build-clips:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
@@ -80,7 +81,7 @@ jobs:
 
   build-clisp:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
@@ -136,7 +137,7 @@ jobs:
 
   build-prolog:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
@@ -192,7 +193,7 @@ jobs:
 
   build-scheme:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
