@@ -69,13 +69,13 @@ jobs:
           context: .
           file: ./harnesses/clips/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ghcr.io/The-Randalorian/rando-ga-test-harness-clips:latest
+          tags: ghcr.io/the-randalorian/rando-ga-test-harness-clips:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Sign the published clips Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
-          TAGS: ghcr.io/The-Randalorian/rando-ga-test-harness-clips:latest
+          TAGS: ghcr.io/the-randalorian/rando-ga-test-harness-clips:latest
           DIGEST: ${{ steps.build-and-push-clips.outputs.digest }}
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
