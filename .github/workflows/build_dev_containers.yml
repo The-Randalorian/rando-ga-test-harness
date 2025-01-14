@@ -79,7 +79,7 @@ jobs:
           DIGEST: ${{ steps.build-and-push-clips.outputs.digest }}
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
 
-  build-clisp:
+  build-lisp:
 
     runs-on: ubuntu-24.04
     permissions:
@@ -117,22 +117,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push clisp Docker image
-        id: build-and-push-clisp
+      - name: Build and push lisp Docker image
+        id: build-and-push-lisp
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         with:
           context: .
-          file: ./harnesses/clisp/Dockerfile
+          file: ./harnesses/lisp/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ghcr.io/the-randalorian/rando-ga-test-harness-clisp:latest, ghcr.io/the-randalorian/rando-ga-test-harness:clisp-latest
+          tags: ghcr.io/the-randalorian/rando-ga-test-harness-lisp:latest, ghcr.io/the-randalorian/rando-ga-test-harness:lisp-latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Sign the published clisp Docker image
+      - name: Sign the published lisp Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
-          TAGS: ghcr.io/the-randalorian/rando-ga-test-harness-clisp:latest
-          DIGEST: ${{ steps.build-and-push-clisp.outputs.digest }}
+          TAGS: ghcr.io/the-randalorian/rando-ga-test-harness-lisp:latest
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
 
   build-prolog:
