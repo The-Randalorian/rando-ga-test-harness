@@ -1,3 +1,8 @@
+### Custom
+*.stdout
+*.stderr
+*.result
+
 ### Scheme template
 *.ss~
 *.ss#*
