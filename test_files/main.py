@@ -1,4 +1,5 @@
 import datetime
+import os
 import pathlib
 
 import testing
@@ -17,13 +18,16 @@ tests = {
 
 
 for language, paths in tests.items():
-    image = testing.get_language_image(
-        language=language,
-        base_url="rando-ga-test-harness"
-    )
-    #image.pull()
-
-    print(image.url)
+    if os.getenv("TEST_HARNESS_LOCAL_IMAGES", default="false").lower() in ("true", "1", "t", "yes", "y"):
+        image = testing.get_language_image(
+            language=language,
+            base_url="rando-ga-test-harness"
+        )
+    else:
+        image = testing.get_language_image(
+            language=language
+        )
+        image.pull()
 
     for path in paths:
         testing.run_test(image, path)
