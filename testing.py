@@ -7,9 +7,10 @@ import docker_interface
 
 MAX_TIME = 60.0
 
+
 def run_test(image: docker_interface.Image, path: pathlib.Path, max_time: float=MAX_TIME):
     with image.create(networks=None) as container:
-        container.copy_into(path, pathlib.Path("/home/nonroot")/path.name)
+        container.copy_into(path, pathlib.Path("/home/glados")/path.name)
         start_time = datetime.datetime.now()
         result = container.execute(max_time=max_time)
         end_time = datetime.datetime.now()
@@ -22,7 +23,7 @@ def run_test(image: docker_interface.Image, path: pathlib.Path, max_time: float=
             print(f"{path}: PASS")
             success = True
 
-        with open(path.with_suffix(".result"), "wt") as f:
+        with open(path.with_suffix(f"{path.suffix}.result"), "wt") as f:
             ret_code = result[1]-64
             if result[1] == 0:
                 ret_code = 0
@@ -37,9 +38,9 @@ def run_test(image: docker_interface.Image, path: pathlib.Path, max_time: float=
                 f"Return code: {ret_code}\n",
                 f"Harness code: {result[1]}\n"
             ])
-        with open(path.with_suffix(".stdout"), "wb") as f:
+        with open(path.with_suffix(f"{path.suffix}.stdout"), "wb") as f:
             f.write(result[2])
-        with open(path.with_suffix(".stderr"), "wb") as f:
+        with open(path.with_suffix(f"{path.suffix}.stderr"), "wb") as f:
             f.write(result[3])
 
 @functools.cache

@@ -8,8 +8,8 @@ RUN chmod 555 /usr/local/bin/run-harness.py
 RUN apt-get update -q -y && \
     apt-get install -q -y python3 swi-prolog && \
     rm -rf /var/lib/apt/lists/*
-RUN groupadd  --gid $GID nonroot && \
-    useradd --uid $UID --gid $GID nonroot
-WORKDIR /home/nonroot
-USER nonroot
+RUN groupadd  --gid $GID glados && \
+    useradd --uid $UID --gid $GID glados
+WORKDIR /home/glados
+USER glados
 CMD /usr/local/bin/run-harness.py
