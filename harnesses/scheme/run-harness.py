@@ -24,12 +24,12 @@ for glob_start in glob_names:
     # multiple executables is not allowed
     if len(executables) > 1:
         print("HARNESS_ERROR: Multiple executables found")
-        exit(1002)  # multiple executables
+        exit(32)  # multiple executables
     elif len(executables) == 1:
         rc = runfile(executables[0])
         if rc != 0:
-            exit(2000 + rc)  # error in user file, subtract 2000 to get the error code
+            exit(64 + rc)  # error in user file, subtract 64 to get the error code
         exit(0)
 
 print("HARNESS_ERROR: No executables found")
-exit(1001)  # no executable
+exit(33)  # no executable
