@@ -2,17 +2,26 @@
 
 import subprocess
 import pathlib
+import os
 
 #change these for each harness
 extensions = (".scm", ".sps", ".ss", ".sls", ".sld", ".sc", ".sch")  # file extensions to check
 glob_names = ("main", "*main*", "*")  # globs to check SEQUENTIALLY
-def runfile(path: pathlib.Path):
-    return subprocess.run(["scheme", "--batch-mode", "--load", str(path)]).returncode
+def runfile(paths: list[pathlib.Path]):
+    args = ["scheme", "--batch-mode"]
+    for path in paths:
+        args.append("--load")
+        args.append(str(path))
+    args.append("--eval")
+    args.append(os.environ.get("RANDOGRADER_EVAL", "(begin (newline))"))
+    return subprocess.run(args).returncode
 
 working_dir = pathlib.Path(".")
 
 
 # the rest of this code should stay the same
+
+file_count = int(os.environ.get("RANDOGRADER_COUNT", 1))
 
 # search for a given file name glob (re)
 for glob_start in glob_names:
@@ -21,15 +30,15 @@ for glob_start in glob_names:
     for extension in extensions:
         executables.extend(working_dir.glob("*" + extension, case_sensitive=False))
 
-    # multiple executables is not allowed
-    if len(executables) > 1:
-        print("HARNESS_ERROR: Multiple executables found")
-        exit(32)  # multiple executables
-    elif len(executables) == 1:
-        rc = runfile(executables[0])
+    # too many executables is not allowed
+    if len(executables) > file_count:
+        print("HARNESS_ERROR: Too many executables found")
+        exit(32)  # too many executables
+    elif len(executables) > 0:
+        rc = runfile(executables)
         if rc != 0:
             exit(64 + rc)  # error in user file, subtract 64 to get the error code
         exit(0)
 
-print("HARNESS_ERROR: No executables found")
+print("HARNESS_ERROR: Not enough executables found")
 exit(33)  # no executable

@@ -51,7 +51,9 @@ class Image:
         self.counter = 0
 
     @contextlib.contextmanager
-    def create(self, name: str="", networks: object | None | list=Empty) -> Container:
+    def create(self, name: str="", networks: object | None | list=Empty, environment=None) -> Container:
+        if environment is None:
+            environment = {}
         if len(name) <= 0:
             name = f"test-harness-{self.instance_code}-{self.counter:04}"
             self.counter += 1
@@ -67,6 +69,9 @@ class Image:
         else:
             for network in networks:
                 command_args.extend(["--network", network])
+
+        for key, value in environment.items():
+            command_args.extend(["--env", f"{key}={value}"])
 
         command_args.append(self.url)
 
